@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "competitive-intelligence-dashboard",
+  "builds": [
+    {
+      "src": "api/stocks.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/stocks",
+      "dest": "/api/stocks.js"
+    }
+  ],
+  "env": {
+    "API_KEY": "@api_key"
+  }
+}
