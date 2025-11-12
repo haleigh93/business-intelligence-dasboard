@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real-time competitive intelligence dashboard tracking stock performance of major technology companies">
+    <meta property="og:title" content="Competitive Intelligence Dashboard">
+    <meta property="og:description" content="Technology Sector Stock Analysis - Track competitor performance in real-time">
+    <meta property="og:type" content="website">
+    <title>Competitive Intelligence Dashboard - Tech Sector Stock Analysis</title>
+
+    <style>
+        /* ===========================
+           CSS VARIABLES & RESET
+           =========================== */
+        :root {
+            /* High-contrast color scheme for accessibility (WCAG AA) */
+            --primary-bg: #0a0e27;
+            --secondary-bg: #141b3d;
+            --card-bg: #1a2347;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --accent-blue: #4a9eff;
+            --accent-blue-hover: #6bb3ff;
+            --positive-green: #10b981;
+            --negative-red: #ef4444;
+            --border-color: #2d3b5f;
+            --shadow: rgba(0, 0, 0, 0.3);
+
+            /* Typography */
+            --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ===========================
+           BASE STYLES
+           =========================== */
+        body {
+            font-family: var(--font-main);
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* ===========================
+           CONTAINER & LAYOUT
+           =========================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===========================
+           HEADER SECTION
+           =========================== */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* ===========================
+           CONTROLS SECTION
+           =========================== */
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+
+        button:focus {
+            outline: 3px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--accent-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===========================
+           TIMESTAMP DISPLAY
+           =========================== */
+        .timestamp {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            font-family: var(--font-mono);
+        }
+
+        /* ===========================
+           DATA CONTAINER
+           =========================== */
+        .data-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 16px var(--shadow);
+            border: 1px solid var(--border-color);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===========================
+           LOADING STATE
+           =========================== */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===========================
+           ERROR STATE
+           =========================== */
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--negative-red);
+        }
+
+        .error-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .error-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* ===========================
+           TABLE STYLES
+           =========================== */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+        }
+
+        thead {
+            background: var(--secondary-bg);
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 18px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1rem;
+        }
+
+        tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--secondary-bg);
+        }
+
+        /* Company name styling */
+        .company-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Ticker styling */
+        .ticker {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            color: var(--accent-blue);
+            font-size: 0.95rem;
+        }
+
+        /* Price styling */
+        .price {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Highlight styling for highest/lowest prices */
+        .highest {
+            color: var(--positive-green);
+            position: relative;
+        }
+
+        .lowest {
+            color: var(--negative-red);
+            position: relative;
+        }
+
+        .highest::after,
+        .lowest::after {
+            content: '';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .highest::after {
+            background: var(--positive-green);
+            box-shadow: 0 0 10px var(--positive-green);
+        }
+
+        .lowest::after {
+            background: var(--negative-red);
+            box-shadow: 0 0 10px var(--negative-red);
+        }
+
+        /* Change indicator */
+        .change-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .change-up {
+            color: var(--positive-green);
+        }
+
+        .change-down {
+            color: var(--negative-red);
+        }
+
+        .change-neutral {
+            color: var(--text-secondary);
+        }
+
+        /* ===========================
+           RESPONSIVE DESIGN
+           =========================== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            header {
+                padding: 20px 15px;
+                margin-bottom: 25px;
+            }
+
+            .data-container {
+                padding: 20px 15px;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+
+            th {
+                font-size: 0.75rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            /* Stack table on very small screens */
+            .price {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .highest::after,
+            .lowest::after {
+                display: none;
+            }
+        }
+
+        /* ===========================
+           LEGEND
+           =========================== */
+        .legend {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.high {
+            background: var(--positive-green);
+            box-shadow: 0 0 8px var(--positive-green);
+        }
+
+        .legend-dot.low {
+            background: var(--negative-red);
+            box-shadow: 0 0 8px var(--negative-red);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>Competitive Intelligence Dashboard</h1>
+            <p class="subtitle">Technology Sector Stock Analysis</p>
+        </header>
+
+        <!-- Control Buttons -->
+        <div class="controls">
+            <button id="refreshBtn" class="btn-primary" aria-label="Refresh stock data">
+                ↻ Refresh Data
+            </button>
+            <button id="exportBtn" class="btn-secondary" aria-label="Export data to CSV">
+                ⬇ Export to CSV
+            </button>
+        </div>
+
+        <!-- Timestamp Display -->
+        <div id="timestamp" class="timestamp"></div>
+
+        <!-- Main Data Container -->
+        <div class="data-container">
+            <div id="content">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-dot high"></span>
+                <span>Highest Price</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot low"></span>
+                <span>Lowest Price</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * COMPETITIVE INTELLIGENCE DASHBOARD
+         * Main JavaScript Application
+         *
+         * This script handles data fetching, rendering, and user interactions
+         * for the stock tracking dashboard.
+         */
+
+        // ===========================
+        // STATE MANAGEMENT
+        // ===========================
+        let stockData = null;
+        let lastUpdateTime = null;
+
+        // DOM Elements
+        const contentDiv = document.getElementById('content');
+        const timestampDiv = document.getElementById('timestamp');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const exportBtn = document.getElementById('exportBtn');
+
+        // ===========================
+        // RENDERING FUNCTIONS
+        // ===========================
+
+        /**
+         * Displays a loading spinner with message
+         */
+        function showLoading() {
+            contentDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Fetching latest data...</div>
+                </div>
+            `;
+            timestampDiv.textContent = '';
+        }
+
+        /**
+         * Displays an error message
+         * @param {string} message - Error message to display
+         */
+        function showError(message) {
+            contentDiv.innerHTML = `
+                <div class="error">
+                    <div class="error-icon">⚠</div>
+                    <div class="error-text">Unable to load data. Please try again.</div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">${message}</p>
+                </div>
+            `;
+            timestampDiv.textContent = '';
+        }
+
+        /**
+         * Formats a number as USD currency
+         * @param {number} price - Price to format
+         * @returns {string} Formatted price string
+         */
+        function formatPrice(price) {
+            if (price === null || price === undefined) {
+                return 'N/A';
+            }
+            return '$' + price.toFixed(2);
+        }
+
+        /**
+         * Formats an ISO timestamp to a readable format
+         * @param {string} isoString - ISO timestamp
+         * @returns {string} Formatted date string
+         */
+        function formatTimestamp(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZoneName: 'short'
+            });
+        }
+
+        /**
+         * Determines which stocks have the highest and lowest prices
+         * @param {Array} stocks - Array of stock data
+         * @returns {Object} Object with highestIndex and lowestIndex
+         */
+        function findHighLowPrices(stocks) {
+            const validStocks = stocks.filter(s => s.price !== null);
+            if (validStocks.length === 0) {
+                return { highestIndex: -1, lowestIndex: -1 };
+            }
+
+            let highestIndex = -1;
+            let lowestIndex = -1;
+            let highestPrice = -Infinity;
+            let lowestPrice = Infinity;
+
+            stocks.forEach((stock, index) => {
+                if (stock.price !== null) {
+                    if (stock.price > highestPrice) {
+                        highestPrice = stock.price;
+                        highestIndex = index;
+                    }
+                    if (stock.price < lowestPrice) {
+                        lowestPrice = stock.price;
+                        lowestIndex = index;
+                    }
+                }
+            });
+
+            return { highestIndex, lowestIndex };
+        }
+
+        /**
+         * Generates HTML for change indicator
+         * @param {Object} stock - Stock data object
+         * @returns {string} HTML string for change indicator
+         */
+        function getChangeIndicator(stock) {
+            if (stock.change === null || stock.change === undefined) {
+                return '<span class="change-indicator change-neutral">—</span>';
+            }
+
+            const change = stock.change;
+            const changePercent = stock.changePercent;
+            const isPositive = change > 0;
+            const isNegative = change < 0;
+            const isNeutral = change === 0;
+
+            let className = 'change-neutral';
+            let arrow = '—';
+
+            if (isPositive) {
+                className = 'change-up';
+                arrow = '▲';
+            } else if (isNegative) {
+                className = 'change-down';
+                arrow = '▼';
+            }
+
+            const changeText = changePercent !== null
+                ? `${arrow} ${Math.abs(changePercent).toFixed(2)}%`
+                : arrow;
+
+            return `<span class="change-indicator ${className}">${changeText}</span>`;
+        }
+
+        /**
+         * Renders the stock data table
+         * @param {Object} data - Response data from API
+         */
+        function renderTable(data) {
+            const { highestIndex, lowestIndex } = findHighLowPrices(data.data);
+
+            let tableHTML = `
+                <div class="table-wrapper">
+                    <table role="table" aria-label="Stock prices table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Company</th>
+                                <th scope="col">Ticker</th>
+                                <th scope="col">Current Price</th>
+                                <th scope="col">Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            data.data.forEach((stock, index) => {
+                const priceClass = index === highestIndex ? 'highest' :
+                                  index === lowestIndex ? 'lowest' : '';
+
+                const priceFormatted = formatPrice(stock.price);
+                const changeIndicator = getChangeIndicator(stock);
+
+                tableHTML += `
+                    <tr>
+                        <td class="company-name">${stock.companyName}</td>
+                        <td class="ticker">${stock.ticker}</td>
+                        <td class="price ${priceClass}">${priceFormatted}</td>
+                        <td>${changeIndicator}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            contentDiv.innerHTML = tableHTML;
+
+            // Update timestamp
+            lastUpdateTime = data.timestamp;
+            timestampDiv.textContent = `Last updated: ${formatTimestamp(data.timestamp)}`;
+        }
+
+        // ===========================
+        // DATA FETCHING
+        // ===========================
+
+        /**
+         * Fetches stock data from the API
+         */
+        async function fetchStockData() {
+            showLoading();
+
+            // Disable buttons during fetch
+            refreshBtn.disabled = true;
+            exportBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/stocks');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to fetch stock data');
+                }
+
+                // Store data for export functionality
+                stockData = data;
+
+                // Render the table
+                renderTable(data);
+
+            } catch (error) {
+                console.error('Error fetching stock data:', error);
+                showError(error.message);
+            } finally {
+                // Re-enable buttons
+                refreshBtn.disabled = false;
+                exportBtn.disabled = false;
+            }
+        }
+
+        // ===========================
+        // EXPORT FUNCTIONALITY
+        // ===========================
+
+        /**
+         * Exports the current stock data to CSV format
+         */
+        function exportToCSV() {
+            if (!stockData || !stockData.data) {
+                alert('No data available to export. Please fetch data first.');
+                return;
+            }
+
+            // CSV headers
+            let csv = 'Company,Ticker,Current Price,Previous Close,Change,Change %\n';
+
+            // CSV rows
+            stockData.data.forEach(stock => {
+                const price = stock.price !== null ? stock.price.toFixed(2) : 'N/A';
+                const prevClose = stock.previousClose !== null ? stock.previousClose.toFixed(2) : 'N/A';
+                const change = stock.change !== null ? stock.change.toFixed(2) : 'N/A';
+                const changePercent = stock.changePercent !== null ? stock.changePercent.toFixed(2) : 'N/A';
+
+                csv += `"${stock.companyName}",${stock.ticker},${price},${prevClose},${change},${changePercent}\n`;
+            });
+
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+            link.setAttribute('href', url);
+            link.setAttribute('download', `competitive-intelligence-${timestamp}.csv`);
+            link.style.visibility = 'hidden';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // ===========================
+        // EVENT LISTENERS
+        // ===========================
+
+        // Refresh button click handler
+        refreshBtn.addEventListener('click', fetchStockData);
+
+        // Export button click handler
+        exportBtn.addEventListener('click', exportToCSV);
+
+        // Keyboard accessibility for refresh (Ctrl/Cmd + R)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+                e.preventDefault();
+                fetchStockData();
+            }
+        });
+
+        // ===========================
+        // INITIALIZATION
+        // ===========================
+
+        // Fetch data on page load
+        fetchStockData();
+
+        // Auto-refresh every 5 minutes (300000ms)
+        // Uncomment the following line to enable auto-refresh
+        // setInterval(fetchStockData, 300000);
+    </script>
+</body>
+</html>
