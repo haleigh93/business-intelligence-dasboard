@@ -447,6 +447,160 @@
             background: var(--negative-red);
             box-shadow: 0 0 8px var(--negative-red);
         }
+
+        /* ===========================
+           HOLIDAY & MARKET STATUS
+           =========================== */
+        .market-status-banner {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            animation: fadeIn 0.5s ease-in;
+            border: 2px solid;
+        }
+
+        .market-status-banner.open {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--positive-green);
+            color: var(--positive-green);
+        }
+
+        .market-status-banner.closed {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--negative-red);
+            color: var(--negative-red);
+        }
+
+        .market-status-icon {
+            font-size: 1.3rem;
+            margin-right: 8px;
+        }
+
+        .holiday-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px var(--shadow);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .holiday-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .holiday-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .holiday-item {
+            background: var(--secondary-bg);
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .holiday-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .holiday-date {
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .impact-alerts {
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .impact-alert {
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid;
+            font-size: 0.95rem;
+        }
+
+        .impact-alert:last-child {
+            margin-bottom: 0;
+        }
+
+        .impact-alert.high {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--negative-red);
+            color: var(--negative-red);
+        }
+
+        .impact-alert.medium {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+
+        .impact-alert.low {
+            background: rgba(74, 158, 255, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .impact-alert.info {
+            background: rgba(167, 139, 250, 0.1);
+            border-color: #a78bfa;
+            color: #a78bfa;
+        }
+
+        .impact-alert-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .impact-alert-tip {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .impact-effects {
+            list-style: none;
+            margin-top: 8px;
+            padding-left: 0;
+        }
+
+        .impact-effects li {
+            padding: 4px 0;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .impact-effects li::before {
+            content: "• ";
+            margin-right: 8px;
+        }
+
+        .no-holidays {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 20px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -469,6 +623,18 @@
 
         <!-- Timestamp Display -->
         <div id="timestamp" class="timestamp"></div>
+
+        <!-- Market Status Banner -->
+        <div id="marketStatus" class="market-status-banner" style="display: none;">
+            <span class="market-status-icon"></span>
+            <span class="market-status-text"></span>
+        </div>
+
+        <!-- Holiday Information Section -->
+        <div id="holidaySection" class="holiday-section" style="display: none;">
+            <h3>📅 Market Holidays & Impact</h3>
+            <div id="holidayContent"></div>
+        </div>
 
         <!-- Main Data Container -->
         <div class="data-container">
@@ -510,6 +676,9 @@
         const timestampDiv = document.getElementById('timestamp');
         const refreshBtn = document.getElementById('refreshBtn');
         const exportBtn = document.getElementById('exportBtn');
+        const marketStatusDiv = document.getElementById('marketStatus');
+        const holidaySectionDiv = document.getElementById('holidaySection');
+        const holidayContentDiv = document.getElementById('holidayContent');
 
         // ===========================
         // RENDERING FUNCTIONS
@@ -688,6 +857,107 @@
             // Update timestamp
             lastUpdateTime = data.timestamp;
             timestampDiv.textContent = `Last updated: ${formatTimestamp(data.timestamp)}`;
+
+            // Render holiday information if available
+            if (data.holidays) {
+                renderHolidayInformation(data.holidays);
+            }
+        }
+
+        /**
+         * Renders market status banner
+         * @param {Object} holidays - Holiday data from API
+         */
+        function renderMarketStatus(holidays) {
+            const icon = marketStatusDiv.querySelector('.market-status-icon');
+            const text = marketStatusDiv.querySelector('.market-status-text');
+
+            if (holidays.marketStatus === 'CLOSED') {
+                marketStatusDiv.className = 'market-status-banner closed';
+                icon.textContent = '🔴';
+                text.textContent = `Market CLOSED - ${holidays.todayHoliday ? holidays.todayHoliday.name : 'Holiday'}`;
+            } else {
+                marketStatusDiv.className = 'market-status-banner open';
+                icon.textContent = '🟢';
+                text.textContent = 'Market OPEN - Active Trading';
+            }
+
+            marketStatusDiv.style.display = 'block';
+        }
+
+        /**
+         * Formats a date string to a readable format
+         * @param {string} dateStr - Date string (YYYY-MM-DD)
+         * @returns {string} Formatted date
+         */
+        function formatHolidayDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            return date.toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        /**
+         * Renders holiday information section
+         * @param {Object} holidays - Holiday data from API
+         */
+        function renderHolidayInformation(holidays) {
+            // Show market status banner
+            renderMarketStatus(holidays);
+
+            let html = '';
+
+            // Show upcoming holidays if any
+            if (holidays.upcomingHolidays && holidays.upcomingHolidays.length > 0) {
+                html += '<div class="holiday-list">';
+                html += '<h4 style="margin-bottom: 10px; color: var(--text-secondary); font-size: 0.95rem;">Upcoming Market Holidays</h4>';
+
+                holidays.upcomingHolidays.forEach(holiday => {
+                    html += `
+                        <div class="holiday-item">
+                            <span class="holiday-name">${holiday.name}</span>
+                            <span class="holiday-date">${formatHolidayDate(holiday.date)}</span>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+            } else if (!holidays.isTodayHoliday) {
+                html += '<div class="no-holidays">No market holidays in the next 30 days</div>';
+            }
+
+            // Show impact alerts
+            if (holidays.impact && holidays.impact.length > 0) {
+                html += '<div class="impact-alerts">';
+                html += '<h4 style="margin-bottom: 12px; color: var(--text-secondary); font-size: 0.95rem;">Holiday Impact Analysis</h4>';
+
+                holidays.impact.forEach(impact => {
+                    html += `<div class="impact-alert ${impact.severity}">`;
+                    html += `<div class="impact-alert-title">${impact.message}</div>`;
+
+                    if (impact.tip) {
+                        html += `<div class="impact-alert-tip">💡 ${impact.tip}</div>`;
+                    }
+
+                    if (impact.effects && impact.effects.length > 0) {
+                        html += '<ul class="impact-effects">';
+                        impact.effects.forEach(effect => {
+                            html += `<li>${effect}</li>`;
+                        });
+                        html += '</ul>';
+                    }
+
+                    html += '</div>';
+                });
+
+                html += '</div>';
+            }
+
+            holidayContentDiv.innerHTML = html;
+            holidaySectionDiv.style.display = 'block';
         }
 
         // ===========================
@@ -738,7 +1008,7 @@
         // ===========================
 
         /**
-         * Exports the current stock data to CSV format
+         * Exports the current stock data to CSV format with holiday information
          */
         function exportToCSV() {
             if (!stockData || !stockData.data) {
@@ -758,6 +1028,25 @@
 
                 csv += `"${stock.companyName}",${stock.ticker},${price},${prevClose},${change},${changePercent}\n`;
             });
+
+            // Add holiday information if available
+            if (stockData.holidays) {
+                csv += '\n\n';
+                csv += 'Market Status Information\n';
+                csv += `Market Status,${stockData.holidays.marketStatus}\n`;
+
+                if (stockData.holidays.isTodayHoliday && stockData.holidays.todayHoliday) {
+                    csv += `Today's Holiday,"${stockData.holidays.todayHoliday.name}"\n`;
+                }
+
+                if (stockData.holidays.upcomingHolidays && stockData.holidays.upcomingHolidays.length > 0) {
+                    csv += '\nUpcoming Market Holidays\n';
+                    csv += 'Holiday Name,Date,Day\n';
+                    stockData.holidays.upcomingHolidays.forEach(holiday => {
+                        csv += `"${holiday.name}",${holiday.date},${holiday.day_of_week}\n`;
+                    });
+                }
+            }
 
             // Create download link
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
