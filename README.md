@@ -25,10 +25,22 @@ A professional business intelligence dashboard for tracking competitor stock per
 
 ### Business Intelligence Features
 - **One-click refresh** for latest market data
-- **CSV export** functionality for reports and presentations
+- **CSV export** functionality for reports and presentations (includes holiday data)
 - **Timestamp tracking** for audit trails
 - **Change indicators** showing price movements
 - **Loading and error states** for robust UX
+
+### Holiday Integration & Market Impact Analysis
+- **Real-time market status** indicator (OPEN/CLOSED)
+- **Upcoming market holidays** display (next 30 days)
+- **Holiday impact analysis** with educational insights:
+  - Market closure alerts
+  - Pre-holiday trading pattern information
+  - Post-holiday volatility warnings
+  - Long weekend impact guidance
+  - Year-end tax considerations
+- **Smart filtering** of NYSE/NASDAQ official holidays
+- **Integrated holiday data** in CSV exports for comprehensive reports
 
 ## Architecture
 
@@ -45,7 +57,9 @@ A professional business intelligence dashboard for tracking competitor stock per
 ### Technology Stack
 - **Frontend**: Vanilla JavaScript, HTML5, CSS3
 - **Backend**: Node.js serverless functions (Vercel)
-- **API**: API Ninjas Stock Price API
+- **APIs**:
+  - API Ninjas Stock Price API
+  - API Ninjas Holidays API (US market holidays)
 - **Deployment**: Vercel
 - **Design**: High-contrast, accessible UI (WCAG AA)
 
@@ -134,6 +148,9 @@ Click the **"Export to CSV"** button to download current data. The CSV file incl
 - Current prices
 - Previous close prices
 - Price changes (absolute and percentage)
+- **Market status** (OPEN/CLOSED)
+- **Upcoming market holidays** with dates
+- **Holiday impact information**
 
 The exported file is named with the current date: `competitive-intelligence-YYYY-MM-DD.csv`
 
@@ -142,6 +159,8 @@ The exported file is named with the current date: `competitive-intelligence-YYYY
 - **Red highlight**: Lowest stock price among tracked companies
 - **Up arrow (▲)**: Stock increased from previous close
 - **Down arrow (▼)**: Stock decreased from previous close
+- **🟢 Green banner**: Market is open for trading
+- **🔴 Red banner**: Market is closed (holiday)
 
 ### API Endpoint
 
@@ -162,10 +181,39 @@ The serverless function is available at `/api/stocks`
       "changePercent": 0.71
     }
   ],
+  "holidays": {
+    "marketStatus": "OPEN",
+    "isTodayHoliday": false,
+    "todayHoliday": null,
+    "upcomingHolidays": [
+      {
+        "name": "Presidents' Day",
+        "date": "2024-02-19",
+        "day_of_week": "Monday"
+      }
+    ],
+    "isHolidaySeason": false,
+    "impact": [
+      {
+        "type": "PRE_HOLIDAY",
+        "severity": "medium",
+        "message": "Upcoming holiday may affect trading volume.",
+        "tip": "Markets often experience reduced volume and increased volatility around holidays."
+      }
+    ],
+    "allMarketHolidays": [
+      {
+        "name": "New Year's Day",
+        "date": "2024-01-01",
+        "day": "Monday"
+      }
+    ]
+  },
   "metadata": {
     "companiesTracked": 5,
     "successfulFetches": 5,
-    "failedFetches": 0
+    "failedFetches": 0,
+    "holidaysFound": 10
   }
 }
 ```

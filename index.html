@@ -447,6 +447,397 @@
             background: var(--negative-red);
             box-shadow: 0 0 8px var(--negative-red);
         }
+
+        /* ===========================
+           HOLIDAY & MARKET STATUS
+           =========================== */
+        .market-status-banner {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            animation: fadeIn 0.5s ease-in;
+            border: 2px solid;
+        }
+
+        .market-status-banner.open {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--positive-green);
+            color: var(--positive-green);
+        }
+
+        .market-status-banner.closed {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--negative-red);
+            color: var(--negative-red);
+        }
+
+        .market-status-icon {
+            font-size: 1.3rem;
+            margin-right: 8px;
+        }
+
+        .holiday-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px var(--shadow);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .holiday-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .holiday-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .holiday-item {
+            background: var(--secondary-bg);
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .holiday-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .holiday-date {
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .impact-alerts {
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .impact-alert {
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid;
+            font-size: 0.95rem;
+        }
+
+        .impact-alert:last-child {
+            margin-bottom: 0;
+        }
+
+        .impact-alert.high {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--negative-red);
+            color: var(--negative-red);
+        }
+
+        .impact-alert.medium {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+
+        .impact-alert.low {
+            background: rgba(74, 158, 255, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .impact-alert.info {
+            background: rgba(167, 139, 250, 0.1);
+            border-color: #a78bfa;
+            color: #a78bfa;
+        }
+
+        .impact-alert-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .impact-alert-tip {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .impact-effects {
+            list-style: none;
+            margin-top: 8px;
+            padding-left: 0;
+        }
+
+        .impact-effects li {
+            padding: 4px 0;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .impact-effects li::before {
+            content: "• ";
+            margin-right: 8px;
+        }
+
+        .no-holidays {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 20px;
+            font-style: italic;
+        }
+
+        /* ===========================
+           TAB NAVIGATION
+           =========================== */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-family: var(--font-main);
+            box-shadow: none;
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+            background: var(--secondary-bg);
+            transform: none;
+        }
+
+        .tab.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+            background: transparent;
+        }
+
+        .tab:focus {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: -2px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ===========================
+           EARNINGS TRANSCRIPT STYLES
+           =========================== */
+        .earnings-selector {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+
+        .earnings-selector label {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .earnings-selector select {
+            padding: 10px 15px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: var(--font-main);
+        }
+
+        .earnings-selector select:focus {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        .earnings-header {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .earnings-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .earnings-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .earnings-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .earnings-meta-label {
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .participants-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .participants-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .participants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .participant-card {
+            background: var(--secondary-bg);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .participant-role {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .transcript-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .transcript-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .transcript-item {
+            background: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .transcript-speaker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .speaker-name {
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-size: 1.05rem;
+        }
+
+        .speaker-role {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .transcript-text {
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+
+        .no-transcript {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-transcript-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                gap: 0;
+            }
+
+            .tab {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .earnings-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .earnings-selector select {
+                width: 100%;
+            }
+
+            .participants-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -457,8 +848,20 @@
             <p class="subtitle">Technology Sector Stock Analysis</p>
         </header>
 
-        <!-- Control Buttons -->
-        <div class="controls">
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab active" data-tab="stocks" aria-label="Stock Prices Tab">
+                📈 Stock Prices
+            </button>
+            <button class="tab" data-tab="earnings" aria-label="Earnings Transcripts Tab">
+                📄 Earnings Transcripts
+            </button>
+        </div>
+
+        <!-- Stocks Tab Content -->
+        <div id="stocks-tab" class="tab-content active">
+            <!-- Control Buttons -->
+            <div class="controls">
             <button id="refreshBtn" class="btn-primary" aria-label="Refresh stock data">
                 ↻ Refresh Data
             </button>
@@ -470,6 +873,18 @@
         <!-- Timestamp Display -->
         <div id="timestamp" class="timestamp"></div>
 
+        <!-- Market Status Banner -->
+        <div id="marketStatus" class="market-status-banner" style="display: none;">
+            <span class="market-status-icon"></span>
+            <span class="market-status-text"></span>
+        </div>
+
+        <!-- Holiday Information Section -->
+        <div id="holidaySection" class="holiday-section" style="display: none;">
+            <h3>📅 Market Holidays & Impact</h3>
+            <div id="holidayContent"></div>
+        </div>
+
         <!-- Main Data Container -->
         <div class="data-container">
             <div id="content">
@@ -477,15 +892,59 @@
             </div>
         </div>
 
-        <!-- Legend -->
-        <div class="legend">
-            <div class="legend-item">
-                <span class="legend-dot high"></span>
-                <span>Highest Price</span>
+            <!-- Legend -->
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-dot high"></span>
+                    <span>Highest Price</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot low"></span>
+                    <span>Lowest Price</span>
+                </div>
             </div>
-            <div class="legend-item">
-                <span class="legend-dot low"></span>
-                <span>Lowest Price</span>
+        </div>
+
+        <!-- Earnings Tab Content -->
+        <div id="earnings-tab" class="tab-content">
+            <!-- Company & Period Selector -->
+            <div class="earnings-selector">
+                <label for="companySelect">Company:</label>
+                <select id="companySelect" aria-label="Select company">
+                    <option value="">-- Select Company --</option>
+                    <option value="AAPL">Apple Inc. (AAPL)</option>
+                    <option value="MSFT">Microsoft Corporation (MSFT)</option>
+                    <option value="GOOGL">Alphabet Inc. (GOOGL)</option>
+                    <option value="META">Meta Platforms Inc. (META)</option>
+                    <option value="AMZN">Amazon.com Inc. (AMZN)</option>
+                </select>
+
+                <label for="yearSelect">Year:</label>
+                <select id="yearSelect" aria-label="Select year">
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                </select>
+
+                <label for="quarterSelect">Quarter:</label>
+                <select id="quarterSelect" aria-label="Select quarter">
+                    <option value="1">Q1</option>
+                    <option value="2">Q2</option>
+                    <option value="3">Q3</option>
+                    <option value="4">Q4</option>
+                </select>
+
+                <button id="loadEarningsBtn" class="btn-primary" aria-label="Load earnings transcript">
+                    Load Transcript
+                </button>
+            </div>
+
+            <!-- Earnings Content Container -->
+            <div id="earningsContent">
+                <div class="no-transcript">
+                    <div class="no-transcript-icon">📄</div>
+                    <p>Select a company, year, and quarter to view earnings call transcript</p>
+                </div>
             </div>
         </div>
     </div>
@@ -510,6 +969,9 @@
         const timestampDiv = document.getElementById('timestamp');
         const refreshBtn = document.getElementById('refreshBtn');
         const exportBtn = document.getElementById('exportBtn');
+        const marketStatusDiv = document.getElementById('marketStatus');
+        const holidaySectionDiv = document.getElementById('holidaySection');
+        const holidayContentDiv = document.getElementById('holidayContent');
 
         // ===========================
         // RENDERING FUNCTIONS
@@ -688,6 +1150,107 @@
             // Update timestamp
             lastUpdateTime = data.timestamp;
             timestampDiv.textContent = `Last updated: ${formatTimestamp(data.timestamp)}`;
+
+            // Render holiday information if available
+            if (data.holidays) {
+                renderHolidayInformation(data.holidays);
+            }
+        }
+
+        /**
+         * Renders market status banner
+         * @param {Object} holidays - Holiday data from API
+         */
+        function renderMarketStatus(holidays) {
+            const icon = marketStatusDiv.querySelector('.market-status-icon');
+            const text = marketStatusDiv.querySelector('.market-status-text');
+
+            if (holidays.marketStatus === 'CLOSED') {
+                marketStatusDiv.className = 'market-status-banner closed';
+                icon.textContent = '🔴';
+                text.textContent = `Market CLOSED - ${holidays.todayHoliday ? holidays.todayHoliday.name : 'Holiday'}`;
+            } else {
+                marketStatusDiv.className = 'market-status-banner open';
+                icon.textContent = '🟢';
+                text.textContent = 'Market OPEN - Active Trading';
+            }
+
+            marketStatusDiv.style.display = 'block';
+        }
+
+        /**
+         * Formats a date string to a readable format
+         * @param {string} dateStr - Date string (YYYY-MM-DD)
+         * @returns {string} Formatted date
+         */
+        function formatHolidayDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            return date.toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        /**
+         * Renders holiday information section
+         * @param {Object} holidays - Holiday data from API
+         */
+        function renderHolidayInformation(holidays) {
+            // Show market status banner
+            renderMarketStatus(holidays);
+
+            let html = '';
+
+            // Show upcoming holidays if any
+            if (holidays.upcomingHolidays && holidays.upcomingHolidays.length > 0) {
+                html += '<div class="holiday-list">';
+                html += '<h4 style="margin-bottom: 10px; color: var(--text-secondary); font-size: 0.95rem;">Upcoming Market Holidays</h4>';
+
+                holidays.upcomingHolidays.forEach(holiday => {
+                    html += `
+                        <div class="holiday-item">
+                            <span class="holiday-name">${holiday.name}</span>
+                            <span class="holiday-date">${formatHolidayDate(holiday.date)}</span>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+            } else if (!holidays.isTodayHoliday) {
+                html += '<div class="no-holidays">No market holidays in the next 30 days</div>';
+            }
+
+            // Show impact alerts
+            if (holidays.impact && holidays.impact.length > 0) {
+                html += '<div class="impact-alerts">';
+                html += '<h4 style="margin-bottom: 12px; color: var(--text-secondary); font-size: 0.95rem;">Holiday Impact Analysis</h4>';
+
+                holidays.impact.forEach(impact => {
+                    html += `<div class="impact-alert ${impact.severity}">`;
+                    html += `<div class="impact-alert-title">${impact.message}</div>`;
+
+                    if (impact.tip) {
+                        html += `<div class="impact-alert-tip">💡 ${impact.tip}</div>`;
+                    }
+
+                    if (impact.effects && impact.effects.length > 0) {
+                        html += '<ul class="impact-effects">';
+                        impact.effects.forEach(effect => {
+                            html += `<li>${effect}</li>`;
+                        });
+                        html += '</ul>';
+                    }
+
+                    html += '</div>';
+                });
+
+                html += '</div>';
+            }
+
+            holidayContentDiv.innerHTML = html;
+            holidaySectionDiv.style.display = 'block';
         }
 
         // ===========================
@@ -738,7 +1301,7 @@
         // ===========================
 
         /**
-         * Exports the current stock data to CSV format
+         * Exports the current stock data to CSV format with holiday information
          */
         function exportToCSV() {
             if (!stockData || !stockData.data) {
@@ -759,6 +1322,25 @@
                 csv += `"${stock.companyName}",${stock.ticker},${price},${prevClose},${change},${changePercent}\n`;
             });
 
+            // Add holiday information if available
+            if (stockData.holidays) {
+                csv += '\n\n';
+                csv += 'Market Status Information\n';
+                csv += `Market Status,${stockData.holidays.marketStatus}\n`;
+
+                if (stockData.holidays.isTodayHoliday && stockData.holidays.todayHoliday) {
+                    csv += `Today's Holiday,"${stockData.holidays.todayHoliday.name}"\n`;
+                }
+
+                if (stockData.holidays.upcomingHolidays && stockData.holidays.upcomingHolidays.length > 0) {
+                    csv += '\nUpcoming Market Holidays\n';
+                    csv += 'Holiday Name,Date,Day\n';
+                    stockData.holidays.upcomingHolidays.forEach(holiday => {
+                        csv += `"${holiday.name}",${holiday.date},${holiday.day_of_week}\n`;
+                    });
+                }
+            }
+
             // Create download link
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
@@ -775,8 +1357,222 @@
         }
 
         // ===========================
+        // TAB SWITCHING
+        // ===========================
+
+        /**
+         * Switches between tabs
+         * @param {string} tabName - Name of the tab to switch to
+         */
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                if (content.id === `${tabName}-tab`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        // ===========================
+        // EARNINGS TRANSCRIPT FUNCTIONALITY
+        // ===========================
+
+        let earningsData = null;
+        const earningsContentDiv = document.getElementById('earningsContent');
+        const companySelect = document.getElementById('companySelect');
+        const yearSelect = document.getElementById('yearSelect');
+        const quarterSelect = document.getElementById('quarterSelect');
+        const loadEarningsBtn = document.getElementById('loadEarningsBtn');
+
+        /**
+         * Fetches earnings transcript from API
+         */
+        async function fetchEarningsTranscript() {
+            const ticker = companySelect.value;
+            const year = yearSelect.value;
+            const quarter = quarterSelect.value;
+
+            if (!ticker) {
+                alert('Please select a company');
+                return;
+            }
+
+            // Show loading state
+            earningsContentDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Loading earnings transcript...</div>
+                </div>
+            `;
+
+            loadEarningsBtn.disabled = true;
+
+            try {
+                const response = await fetch(`/api/earnings?ticker=${ticker}&year=${year}&quarter=${quarter}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to fetch earnings transcript');
+                }
+
+                earningsData = data.data;
+                renderEarningsTranscript(data.data);
+
+            } catch (error) {
+                console.error('Error fetching earnings:', error);
+                earningsContentDiv.innerHTML = `
+                    <div class="no-transcript">
+                        <div class="no-transcript-icon">⚠</div>
+                        <p style="color: var(--negative-red); font-weight: 600;">Unable to load transcript</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px;">${error.message}</p>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 10px;">
+                            This may be because the transcript is not yet available for the selected period.
+                            Try selecting a different quarter or company.
+                        </p>
+                    </div>
+                `;
+            } finally {
+                loadEarningsBtn.disabled = false;
+            }
+        }
+
+        /**
+         * Renders earnings transcript data
+         * @param {Object} data - Earnings transcript data
+         */
+        function renderEarningsTranscript(data) {
+            let html = '';
+
+            // Earnings Header
+            html += `
+                <div class="earnings-header">
+                    <div class="earnings-title">${data.companyName} - Q${data.quarter} ${data.year} Earnings Call</div>
+                    <div class="earnings-meta">
+                        <div class="earnings-meta-item">
+                            <span class="earnings-meta-label">Date:</span>
+                            <span>${new Date(data.date).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}</span>
+                        </div>
+                        <div class="earnings-meta-item">
+                            <span class="earnings-meta-label">Timing:</span>
+                            <span>${data.earnings_timing?.replace('_', ' ').toUpperCase() || 'N/A'}</span>
+                        </div>
+                        <div class="earnings-meta-item">
+                            <span class="earnings-meta-label">Ticker:</span>
+                            <span>${data.ticker}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Participants Section
+            if (data.participants && data.participants.length > 0) {
+                html += `
+                    <div class="participants-section">
+                        <h3>👥 Participants</h3>
+                        <div class="participants-grid">
+                `;
+
+                // Filter out "..." entries and display unique participants
+                const uniqueParticipants = data.participants.filter(p => typeof p === 'object' && p.name);
+
+                uniqueParticipants.forEach(participant => {
+                    html += `
+                        <div class="participant-card">
+                            <div class="participant-name">${participant.name}</div>
+                            <div class="participant-role">${participant.role}${participant.company ? ` - ${participant.company}` : ''}</div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Transcript Section
+            if (data.transcript_split && data.transcript_split.length > 0) {
+                html += `
+                    <div class="transcript-section">
+                        <h3>📝 Transcript</h3>
+                `;
+
+                // Limit to first 20 entries to avoid overwhelming the UI
+                const displayLimit = 20;
+                const transcriptItems = data.transcript_split.slice(0, displayLimit);
+
+                transcriptItems.forEach((item, index) => {
+                    html += `
+                        <div class="transcript-item">
+                            <div class="transcript-speaker">
+                                <span class="speaker-name">${item.speaker || 'Unknown'}</span>
+                                <span class="speaker-role">${item.role || ''}</span>
+                            </div>
+                            <div class="transcript-text">${item.text}</div>
+                        </div>
+                    `;
+                });
+
+                if (data.transcript_split.length > displayLimit) {
+                    html += `
+                        <div style="text-align: center; padding: 20px; color: var(--text-secondary);">
+                            Showing first ${displayLimit} of ${data.transcript_split.length} transcript entries
+                        </div>
+                    `;
+                }
+
+                html += `
+                    </div>
+                `;
+            } else if (data.transcript) {
+                // Fallback: Show full transcript as text
+                html += `
+                    <div class="transcript-section">
+                        <h3>📝 Full Transcript</h3>
+                        <div class="transcript-item">
+                            <div class="transcript-text" style="white-space: pre-wrap;">${data.transcript.substring(0, 5000)}${data.transcript.length > 5000 ? '...' : ''}</div>
+                        </div>
+                        ${data.transcript.length > 5000 ? `<p style="text-align: center; color: var(--text-secondary); margin-top: 10px;">Showing first 5000 characters of ${data.transcript.length} total</p>` : ''}
+                    </div>
+                `;
+            }
+
+            earningsContentDiv.innerHTML = html;
+        }
+
+        // ===========================
         // EVENT LISTENERS
         // ===========================
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchTab(tab.dataset.tab);
+            });
+        });
+
+        // Load earnings button
+        loadEarningsBtn.addEventListener('click', fetchEarningsTranscript);
 
         // Refresh button click handler
         refreshBtn.addEventListener('click', fetchStockData);
