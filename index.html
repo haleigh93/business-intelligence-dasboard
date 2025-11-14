@@ -995,11 +995,34 @@
          * @param {string} message - Error message to display
          */
         function showError(message) {
+            // Check if it's an API_KEY configuration error
+            const isApiKeyError = message.includes('API_KEY') || message.includes('Configuration error');
+
+            let helpText = '';
+            if (isApiKeyError) {
+                helpText = `
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border-left: 4px solid var(--negative-red);">
+                        <div style="font-weight: 600; margin-bottom: 10px;">🔧 How to fix this:</div>
+                        <ol style="text-align: left; display: inline-block; color: var(--text-secondary); font-size: 0.9rem;">
+                            <li>Go to your Vercel project dashboard</li>
+                            <li>Navigate to Settings → Environment Variables</li>
+                            <li>Add a new variable: <code style="background: var(--secondary-bg); padding: 2px 6px; border-radius: 4px;">API_KEY</code></li>
+                            <li>Set the value to: <code style="background: var(--secondary-bg); padding: 2px 6px; border-radius: 4px;">3bfVQ5lCQSwpSW8uQ1WYgQ==tSIcWPx3Qatwfht1</code></li>
+                            <li>Redeploy your application</li>
+                        </ol>
+                    </div>
+                `;
+            }
+
             contentDiv.innerHTML = `
                 <div class="error">
                     <div class="error-icon">⚠</div>
-                    <div class="error-text">Unable to load data. Please try again.</div>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">${message}</p>
+                    <div class="error-text">Unable to load data</div>
+                    <pre style="text-align: left; color: var(--text-secondary); font-size: 0.9rem; background: var(--secondary-bg); padding: 15px; border-radius: 8px; overflow-x: auto; margin: 20px 0; white-space: pre-wrap;">${message}</pre>
+                    ${helpText}
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 15px;">
+                        💡 Open browser console (F12) for detailed debug logs
+                    </p>
                 </div>
             `;
             timestampDiv.textContent = '';
@@ -1261,6 +1284,7 @@
          * Fetches stock data from the API
          */
         async function fetchStockData() {
+            console.log('🔍 DEBUG: fetchStockData() called');
             showLoading();
 
             // Disable buttons during fetch
@@ -1268,26 +1292,38 @@
             exportBtn.disabled = true;
 
             try {
+                console.log('🔍 DEBUG: Fetching /api/stocks...');
                 const response = await fetch('/api/stocks');
+                console.log('🔍 DEBUG: Response received:', response);
+                console.log('🔍 DEBUG: Response status:', response.status, response.statusText);
 
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    // Try to get the error body
+                    const errorText = await response.text();
+                    console.error('🔍 DEBUG: Error response body:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}\n\nResponse: ${errorText.substring(0, 500)}`);
                 }
 
                 const data = await response.json();
+                console.log('🔍 DEBUG: Data received:', data);
 
                 if (!data.success) {
-                    throw new Error(data.message || 'Failed to fetch stock data');
+                    const detailedError = data.error ? `${data.error}: ${data.message}` : data.message;
+                    console.error('🔍 DEBUG: API returned success=false:', detailedError);
+                    throw new Error(detailedError || 'Failed to fetch stock data');
                 }
 
                 // Store data for export functionality
                 stockData = data;
+                console.log('🔍 DEBUG: Stock data stored, rendering table...');
 
                 // Render the table
                 renderTable(data);
+                console.log('🔍 DEBUG: Table rendered successfully');
 
             } catch (error) {
-                console.error('Error fetching stock data:', error);
+                console.error('🔍 DEBUG: Error in fetchStockData:', error);
+                console.error('🔍 DEBUG: Error stack:', error.stack);
                 showError(error.message);
             } finally {
                 // Re-enable buttons
@@ -1403,6 +1439,9 @@
             const year = yearSelect.value;
             const quarter = quarterSelect.value;
 
+            console.log('🔍 DEBUG: fetchEarningsTranscript() called');
+            console.log('🔍 DEBUG: ticker:', ticker, 'year:', year, 'quarter:', quarter);
+
             if (!ticker) {
                 alert('Please select a company');
                 return;
@@ -1419,23 +1458,35 @@
             loadEarningsBtn.disabled = true;
 
             try {
-                const response = await fetch(`/api/earnings?ticker=${ticker}&year=${year}&quarter=${quarter}`);
+                const url = `/api/earnings?ticker=${ticker}&year=${year}&quarter=${quarter}`;
+                console.log('🔍 DEBUG: Fetching:', url);
+                const response = await fetch(url);
+                console.log('🔍 DEBUG: Earnings response:', response);
+                console.log('🔍 DEBUG: Earnings status:', response.status, response.statusText);
 
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    const errorText = await response.text();
+                    console.error('🔍 DEBUG: Earnings error body:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}\n\nResponse: ${errorText.substring(0, 500)}`);
                 }
 
                 const data = await response.json();
+                console.log('🔍 DEBUG: Earnings data received:', data);
 
                 if (!data.success) {
-                    throw new Error(data.message || 'Failed to fetch earnings transcript');
+                    const detailedError = data.error ? `${data.error}: ${data.message}` : data.message;
+                    console.error('🔍 DEBUG: Earnings API returned success=false:', detailedError);
+                    throw new Error(detailedError || 'Failed to fetch earnings transcript');
                 }
 
                 earningsData = data.data;
+                console.log('🔍 DEBUG: Rendering earnings transcript...');
                 renderEarningsTranscript(data.data);
+                console.log('🔍 DEBUG: Earnings transcript rendered successfully');
 
             } catch (error) {
-                console.error('Error fetching earnings:', error);
+                console.error('🔍 DEBUG: Error in fetchEarningsTranscript:', error);
+                console.error('🔍 DEBUG: Error stack:', error.stack);
                 earningsContentDiv.innerHTML = `
                     <div class="no-transcript">
                         <div class="no-transcript-icon">⚠</div>
@@ -1592,12 +1643,36 @@
         // INITIALIZATION
         // ===========================
 
+        // DEBUG: Verify initialization
+        console.log('🔍 DEBUG: ========================================');
+        console.log('🔍 DEBUG: Dashboard JavaScript Initializing...');
+        console.log('🔍 DEBUG: ========================================');
+        console.log('🔍 DEBUG: contentDiv:', contentDiv);
+        console.log('🔍 DEBUG: timestampDiv:', timestampDiv);
+        console.log('🔍 DEBUG: refreshBtn:', refreshBtn);
+        console.log('🔍 DEBUG: exportBtn:', exportBtn);
+        console.log('🔍 DEBUG: marketStatusDiv:', marketStatusDiv);
+        console.log('🔍 DEBUG: holidaySectionDiv:', holidaySectionDiv);
+        console.log('🔍 DEBUG: holidayContentDiv:', holidayContentDiv);
+        console.log('🔍 DEBUG: companySelect:', companySelect);
+        console.log('🔍 DEBUG: yearSelect:', yearSelect);
+        console.log('🔍 DEBUG: quarterSelect:', quarterSelect);
+        console.log('🔍 DEBUG: loadEarningsBtn:', loadEarningsBtn);
+        console.log('🔍 DEBUG: earningsContentDiv:', earningsContentDiv);
+        console.log('🔍 DEBUG: All DOM elements found:',
+            contentDiv && timestampDiv && refreshBtn && exportBtn ? '✅ YES' : '❌ NO');
+        console.log('🔍 DEBUG: ========================================');
+
         // Fetch data on page load
+        console.log('🔍 DEBUG: Starting initial data fetch...');
         fetchStockData();
 
         // Auto-refresh every 5 minutes (300000ms)
         // Uncomment the following line to enable auto-refresh
         // setInterval(fetchStockData, 300000);
+
+        console.log('🔍 DEBUG: Initialization complete');
+        console.log('🔍 DEBUG: ========================================');
     </script>
 </body>
 </html>
