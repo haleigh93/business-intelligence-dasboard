@@ -5,12 +5,20 @@
     {
       "src": "api/stocks.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/earnings.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/stocks",
       "dest": "/api/stocks.js"
+    },
+    {
+      "src": "/api/earnings",
+      "dest": "/api/earnings.js"
     }
   ]
 }

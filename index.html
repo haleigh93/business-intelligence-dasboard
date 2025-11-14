@@ -601,6 +601,243 @@
             padding: 20px;
             font-style: italic;
         }
+
+        /* ===========================
+           TAB NAVIGATION
+           =========================== */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-family: var(--font-main);
+            box-shadow: none;
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+            background: var(--secondary-bg);
+            transform: none;
+        }
+
+        .tab.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+            background: transparent;
+        }
+
+        .tab:focus {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: -2px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ===========================
+           EARNINGS TRANSCRIPT STYLES
+           =========================== */
+        .earnings-selector {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+
+        .earnings-selector label {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .earnings-selector select {
+            padding: 10px 15px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: var(--font-main);
+        }
+
+        .earnings-selector select:focus {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        .earnings-header {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .earnings-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .earnings-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .earnings-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .earnings-meta-label {
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .participants-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .participants-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .participants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .participant-card {
+            background: var(--secondary-bg);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .participant-role {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .transcript-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .transcript-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .transcript-item {
+            background: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .transcript-speaker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .speaker-name {
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-size: 1.05rem;
+        }
+
+        .speaker-role {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .transcript-text {
+            line-height: 1.7;
+            color: var(--text-primary);
+        }
+
+        .no-transcript {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-transcript-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                gap: 0;
+            }
+
+            .tab {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .earnings-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .earnings-selector select {
+                width: 100%;
+            }
+
+            .participants-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -611,8 +848,20 @@
             <p class="subtitle">Technology Sector Stock Analysis</p>
         </header>
 
-        <!-- Control Buttons -->
-        <div class="controls">
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab active" data-tab="stocks" aria-label="Stock Prices Tab">
+                📈 Stock Prices
+            </button>
+            <button class="tab" data-tab="earnings" aria-label="Earnings Transcripts Tab">
+                📄 Earnings Transcripts
+            </button>
+        </div>
+
+        <!-- Stocks Tab Content -->
+        <div id="stocks-tab" class="tab-content active">
+            <!-- Control Buttons -->
+            <div class="controls">
             <button id="refreshBtn" class="btn-primary" aria-label="Refresh stock data">
                 ↻ Refresh Data
             </button>
@@ -643,15 +892,59 @@
             </div>
         </div>
 
-        <!-- Legend -->
-        <div class="legend">
-            <div class="legend-item">
-                <span class="legend-dot high"></span>
-                <span>Highest Price</span>
+            <!-- Legend -->
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-dot high"></span>
+                    <span>Highest Price</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot low"></span>
+                    <span>Lowest Price</span>
+                </div>
             </div>
-            <div class="legend-item">
-                <span class="legend-dot low"></span>
-                <span>Lowest Price</span>
+        </div>
+
+        <!-- Earnings Tab Content -->
+        <div id="earnings-tab" class="tab-content">
+            <!-- Company & Period Selector -->
+            <div class="earnings-selector">
+                <label for="companySelect">Company:</label>
+                <select id="companySelect" aria-label="Select company">
+                    <option value="">-- Select Company --</option>
+                    <option value="AAPL">Apple Inc. (AAPL)</option>
+                    <option value="MSFT">Microsoft Corporation (MSFT)</option>
+                    <option value="GOOGL">Alphabet Inc. (GOOGL)</option>
+                    <option value="META">Meta Platforms Inc. (META)</option>
+                    <option value="AMZN">Amazon.com Inc. (AMZN)</option>
+                </select>
+
+                <label for="yearSelect">Year:</label>
+                <select id="yearSelect" aria-label="Select year">
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                </select>
+
+                <label for="quarterSelect">Quarter:</label>
+                <select id="quarterSelect" aria-label="Select quarter">
+                    <option value="1">Q1</option>
+                    <option value="2">Q2</option>
+                    <option value="3">Q3</option>
+                    <option value="4">Q4</option>
+                </select>
+
+                <button id="loadEarningsBtn" class="btn-primary" aria-label="Load earnings transcript">
+                    Load Transcript
+                </button>
+            </div>
+
+            <!-- Earnings Content Container -->
+            <div id="earningsContent">
+                <div class="no-transcript">
+                    <div class="no-transcript-icon">📄</div>
+                    <p>Select a company, year, and quarter to view earnings call transcript</p>
+                </div>
             </div>
         </div>
     </div>
@@ -1064,8 +1357,222 @@
         }
 
         // ===========================
+        // TAB SWITCHING
+        // ===========================
+
+        /**
+         * Switches between tabs
+         * @param {string} tabName - Name of the tab to switch to
+         */
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                if (content.id === `${tabName}-tab`) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        // ===========================
+        // EARNINGS TRANSCRIPT FUNCTIONALITY
+        // ===========================
+
+        let earningsData = null;
+        const earningsContentDiv = document.getElementById('earningsContent');
+        const companySelect = document.getElementById('companySelect');
+        const yearSelect = document.getElementById('yearSelect');
+        const quarterSelect = document.getElementById('quarterSelect');
+        const loadEarningsBtn = document.getElementById('loadEarningsBtn');
+
+        /**
+         * Fetches earnings transcript from API
+         */
+        async function fetchEarningsTranscript() {
+            const ticker = companySelect.value;
+            const year = yearSelect.value;
+            const quarter = quarterSelect.value;
+
+            if (!ticker) {
+                alert('Please select a company');
+                return;
+            }
+
+            // Show loading state
+            earningsContentDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Loading earnings transcript...</div>
+                </div>
+            `;
+
+            loadEarningsBtn.disabled = true;
+
+            try {
+                const response = await fetch(`/api/earnings?ticker=${ticker}&year=${year}&quarter=${quarter}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to fetch earnings transcript');
+                }
+
+                earningsData = data.data;
+                renderEarningsTranscript(data.data);
+
+            } catch (error) {
+                console.error('Error fetching earnings:', error);
+                earningsContentDiv.innerHTML = `
+                    <div class="no-transcript">
+                        <div class="no-transcript-icon">⚠</div>
+                        <p style="color: var(--negative-red); font-weight: 600;">Unable to load transcript</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 10px;">${error.message}</p>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 10px;">
+                            This may be because the transcript is not yet available for the selected period.
+                            Try selecting a different quarter or company.
+                        </p>
+                    </div>
+                `;
+            } finally {
+                loadEarningsBtn.disabled = false;
+            }
+        }
+
+        /**
+         * Renders earnings transcript data
+         * @param {Object} data - Earnings transcript data
+         */
+        function renderEarningsTranscript(data) {
+            let html = '';
+
+            // Earnings Header
+            html += `
+                <div class="earnings-header">
+                    <div class="earnings-title">${data.companyName} - Q${data.quarter} ${data.year} Earnings Call</div>
+                    <div class="earnings-meta">
+                        <div class="earnings-meta-item">
+                            <span class="earnings-meta-label">Date:</span>
+                            <span>${new Date(data.date).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}</span>
+                        </div>
+                        <div class="earnings-meta-item">
+                            <span class="earnings-meta-label">Timing:</span>
+                            <span>${data.earnings_timing?.replace('_', ' ').toUpperCase() || 'N/A'}</span>
+                        </div>
+                        <div class="earnings-meta-item">
+                            <span class="earnings-meta-label">Ticker:</span>
+                            <span>${data.ticker}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Participants Section
+            if (data.participants && data.participants.length > 0) {
+                html += `
+                    <div class="participants-section">
+                        <h3>👥 Participants</h3>
+                        <div class="participants-grid">
+                `;
+
+                // Filter out "..." entries and display unique participants
+                const uniqueParticipants = data.participants.filter(p => typeof p === 'object' && p.name);
+
+                uniqueParticipants.forEach(participant => {
+                    html += `
+                        <div class="participant-card">
+                            <div class="participant-name">${participant.name}</div>
+                            <div class="participant-role">${participant.role}${participant.company ? ` - ${participant.company}` : ''}</div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Transcript Section
+            if (data.transcript_split && data.transcript_split.length > 0) {
+                html += `
+                    <div class="transcript-section">
+                        <h3>📝 Transcript</h3>
+                `;
+
+                // Limit to first 20 entries to avoid overwhelming the UI
+                const displayLimit = 20;
+                const transcriptItems = data.transcript_split.slice(0, displayLimit);
+
+                transcriptItems.forEach((item, index) => {
+                    html += `
+                        <div class="transcript-item">
+                            <div class="transcript-speaker">
+                                <span class="speaker-name">${item.speaker || 'Unknown'}</span>
+                                <span class="speaker-role">${item.role || ''}</span>
+                            </div>
+                            <div class="transcript-text">${item.text}</div>
+                        </div>
+                    `;
+                });
+
+                if (data.transcript_split.length > displayLimit) {
+                    html += `
+                        <div style="text-align: center; padding: 20px; color: var(--text-secondary);">
+                            Showing first ${displayLimit} of ${data.transcript_split.length} transcript entries
+                        </div>
+                    `;
+                }
+
+                html += `
+                    </div>
+                `;
+            } else if (data.transcript) {
+                // Fallback: Show full transcript as text
+                html += `
+                    <div class="transcript-section">
+                        <h3>📝 Full Transcript</h3>
+                        <div class="transcript-item">
+                            <div class="transcript-text" style="white-space: pre-wrap;">${data.transcript.substring(0, 5000)}${data.transcript.length > 5000 ? '...' : ''}</div>
+                        </div>
+                        ${data.transcript.length > 5000 ? `<p style="text-align: center; color: var(--text-secondary); margin-top: 10px;">Showing first 5000 characters of ${data.transcript.length} total</p>` : ''}
+                    </div>
+                `;
+            }
+
+            earningsContentDiv.innerHTML = html;
+        }
+
+        // ===========================
         // EVENT LISTENERS
         // ===========================
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchTab(tab.dataset.tab);
+            });
+        });
+
+        // Load earnings button
+        loadEarningsBtn.addEventListener('click', fetchEarningsTranscript);
 
         // Refresh button click handler
         refreshBtn.addEventListener('click', fetchStockData);
