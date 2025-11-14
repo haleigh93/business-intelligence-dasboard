@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple API Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #0f0; }
+        .box { background: #000; border: 2px solid #0f0; padding: 20px; margin: 20px 0; }
+        button { padding: 10px 20px; font-size: 16px; background: #0f0; color: #000; border: none; cursor: pointer; }
+        .error { color: #f00; }
+        .success { color: #0f0; }
+        pre { background: #111; padding: 10px; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Simple API Connectivity Test</h1>
+
+    <div class="box">
+        <h2>Test 1: Direct Stock API Call</h2>
+        <button onclick="testStocksAPI()">Test Stocks API</button>
+        <div id="stocks-result"></div>
+    </div>
+
+    <div class="box">
+        <h2>Test 2: Check for JavaScript Errors</h2>
+        <button onclick="checkConsole()">Run Console Check</button>
+        <div id="console-result"></div>
+    </div>
+
+    <script>
+        console.log('✓ JavaScript is loading');
+
+        async function testStocksAPI() {
+            const resultDiv = document.getElementById('stocks-result');
+            resultDiv.innerHTML = '<p>Testing /api/stocks...</p>';
+
+            try {
+                console.log('Calling /api/stocks');
+                const response = await fetch('/api/stocks');
+                console.log('Response:', response);
+
+                const data = await response.json();
+                console.log('Data:', data);
+
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <p class="success">✓ API Working!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <p class="error">✗ API returned error</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p class="error">✗ Error: ${error.message}</p>
+                    <p>This likely means:</p>
+                    <ul>
+                        <li>You're testing locally (APIs only work on Vercel)</li>
+                        <li>OR the API endpoint doesn't exist</li>
+                        <li>OR there's a network issue</li>
+                    </ul>
+                `;
+                console.error('Full error:', error);
+            }
+        }
+
+        function checkConsole() {
+            const resultDiv = document.getElementById('console-result');
+            resultDiv.innerHTML = `
+                <p class="success">✓ JavaScript is working</p>
+                <p>Open your browser console (F12) and look for any RED error messages.</p>
+                <p>If you see errors, copy them and share with me.</p>
+            `;
+            console.log('Console check complete. If you see this, JavaScript is working!');
+        }
+
+        // Auto-run on load
+        window.onload = function() {
+            console.log('Page loaded successfully');
+            checkConsole();
+        };
+    </script>
+</body>
+</html>
