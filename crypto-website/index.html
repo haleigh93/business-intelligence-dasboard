@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Understanding cryptocurrency's evolution and its potential to reshape global finance">
+    <meta name="keywords" content="cryptocurrency, blockchain, fiat currency, CBDC, stablecoins, digital money">
+    <meta name="author" content="CryptoShifts Team - RIT">
+    <title>CryptoShifts - The Future of Money</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🔗 CryptoShifts</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#basics">Basics</a></li>
+                <li><a href="#pros-cons">Pros & Cons</a></li>
+                <li><a href="#global">Global Impact</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#market">Market</a></li>
+                <li><a href="faucets.html">Testnet Faucets</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Bitcoin Price Ticker -->
+    <div class="crypto-ticker">
+        <div class="ticker-container">
+            <div class="ticker-item">
+                <span class="ticker-label">₿ Bitcoin:</span>
+                <span class="ticker-price" id="btcPrice">Loading...</span>
+                <span class="ticker-change" id="btcChange">--</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-label">Ξ Ethereum:</span>
+                <span class="ticker-price" id="ethPrice">Loading...</span>
+                <span class="ticker-change" id="ethChange">--</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-label">Market Cap:</span>
+                <span class="ticker-price" id="marketCap">Loading...</span>
+            </div>
+            <div class="ticker-update">
+                <span id="lastUpdate">Updating...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb" id="breadcrumb">
+        <a href="#home">Home</a> / <span id="currentSection">Welcome</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero" id="home">
+            <h1>The Future of Money</h1>
+            <p>Understanding cryptocurrency's evolution and its potential to reshape global finance</p>
+        </div>
+
+        <!-- Understanding the Basics -->
+        <section class="section-basics" id="basics">
+            <h2>Understanding the Basics</h2>
+            <p>The financial landscape is evolving rapidly, with <span class="tooltip">cryptocurrency<span class="tooltiptext">Digital or virtual currency that uses cryptography for security and operates on decentralized networks</span></span> emerging as a potential complement or alternative to traditional <span class="tooltip">fiat currency<span class="tooltiptext">Government-issued currency not backed by a physical commodity like gold, but by the trust in the issuing government</span></span>.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>💵 Fiat Currency</h3>
+                    <p>Traditional government-backed money that we use daily. It's centralized, regulated, and widely accepted, but subject to inflation and government control.</p>
+                </div>
+                <div class="card">
+                    <h3>₿ Cryptocurrency</h3>
+                    <p>Digital assets operating on <span class="tooltip">blockchain<span class="tooltiptext">A distributed ledger technology that records transactions across multiple computers in a secure, transparent way</span></span> technology. Decentralized, transparent, and borderless, but faces volatility and regulatory challenges.</p>
+                </div>
+                <div class="card">
+                    <h3>🏦 CBDCs</h3>
+                    <p><span class="tooltip">Central Bank Digital Currencies<span class="tooltiptext">Digital versions of fiat currency issued and regulated by central banks, combining blockchain efficiency with sovereign control</span></span> represent a hybrid approach, modernizing fiat with blockchain technology while maintaining government oversight.</p>
+                </div>
+                <div class="card">
+                    <h3>⚖️ Stablecoins</h3>
+                    <p>The bridge between traditional and digital finance. These cryptocurrencies are pegged to stable assets like the US dollar, offering crypto benefits with reduced volatility.</p>
+                </div>
+            </div>
+
+            <h3>How Blockchain Works</h3>
+            <p>Blockchain functions as a decentralized database that verifies, secures, and transfers data without traditional intermediaries. Each transaction is recorded in a "block" and linked to previous transactions, creating an immutable chain. This technology reshapes business practices by enabling peer-to-peer transactions, reducing costs, and increasing transparency.</p>
+        </section>
+
+        <!-- Pros and Cons -->
+        <section class="section-pros-cons" id="pros-cons">
+            <h2>Pros and Cons</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>✅ Cryptocurrency Advantages</h3>
+                    <ul>
+                        <li><strong>Speed:</strong> Fast, borderless transactions</li>
+                        <li><strong>Accessibility:</strong> Financial inclusion for the unbanked</li>
+                        <li><strong>Transparency:</strong> All transactions recorded on public ledgers</li>
+                        <li><strong>Innovation:</strong> Programmable money and smart contracts</li>
+                        <li><strong>Lower Fees:</strong> Reduced transaction costs for international transfers</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>⚠️ Cryptocurrency Challenges</h3>
+                    <ul>
+                        <li><strong>Volatility:</strong> Significant price fluctuations</li>
+                        <li><strong>Regulation:</strong> Unclear legal frameworks</li>
+                        <li><strong>Scalability:</strong> Limited transaction capacity compared to traditional systems</li>
+                        <li><strong>Consumer Protection:</strong> Less recourse in cases of fraud</li>
+                        <li><strong>Adoption Barriers:</strong> Technical complexity for average users</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>✅ Fiat Currency Strengths</h3>
+                    <ul>
+                        <li><strong>Stability:</strong> Generally stable value</li>
+                        <li><strong>Trust:</strong> Backed by government authority</li>
+                        <li><strong>Acceptance:</strong> Universal acceptance for transactions</li>
+                        <li><strong>Protection:</strong> Strong consumer protection laws</li>
+                        <li><strong>Ease of Use:</strong> Simple and familiar for everyone</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>⚠️ Fiat Currency Limitations</h3>
+                    <ul>
+                        <li><strong>Inflation:</strong> Currency devaluation over time</li>
+                        <li><strong>Centralization:</strong> Subject to government control</li>
+                        <li><strong>Slow Transfers:</strong> International transactions can take days</li>
+                        <li><strong>High Fees:</strong> Costly cross-border payments</li>
+                        <li><strong>Limited Access:</strong> Banking infrastructure not available everywhere</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Impact -->
+        <section class="section-global" id="global">
+            <h2>Global Impact</h2>
+            <p>The integration of cryptocurrency into the global financial system represents a fundamental shift in how we think about money, value exchange, and economic sovereignty.</p>
+
+            <h3>Adoption Timeline</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>2009 - Bitcoin's Birth</h4>
+                    <p>Bitcoin introduces blockchain technology and decentralized digital currency to the world.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2015 - Smart Contract Era</h4>
+                    <p>Ethereum launches, enabling programmable blockchain applications and decentralized finance (DeFi).</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2020 - Institutional Adoption</h4>
+                    <p>Major corporations and financial institutions begin investing in and accepting cryptocurrency.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2023-2024 - CBDC Development</h4>
+                    <p>Central banks worldwide pilot and launch digital currencies, bridging traditional and crypto finance.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2025 - Hybrid Systems Emerge</h4>
+                    <p>Coexistence of fiat, CBDCs, and private cryptocurrencies becomes the new normal.</p>
+                </div>
+            </div>
+
+            <h3>Regional Perspectives</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🌎 Americas</h3>
+                    <p>The US explores a digital dollar while maintaining regulatory scrutiny. El Salvador adopts Bitcoin as legal tender, setting a precedent for emerging economies.</p>
+                </div>
+                <div class="card">
+                    <h3>🌍 Europe</h3>
+                    <p>The EU develops comprehensive crypto regulations (MiCA) and advances the digital euro project, balancing innovation with consumer protection.</p>
+                </div>
+                <div class="card">
+                    <h3>🌏 Asia</h3>
+                    <p>China leads CBDC development with the digital yuan, while other nations like Singapore embrace crypto innovation through regulatory sandboxes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="section-features" id="features">
+            <h2>Key Features Comparison</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🔒 Security</h3>
+                    <p><strong>Crypto:</strong> Cryptographic security, immutable ledgers<br>
+                    <strong>Fiat:</strong> Government guarantees, FDIC insurance<br>
+                    <strong>Winner:</strong> Tie - different security models</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Transaction Speed</h3>
+                    <p><strong>Crypto:</strong> Minutes to hours (depending on network)<br>
+                    <strong>Fiat:</strong> Instant to days (depending on method)<br>
+                    <strong>Winner:</strong> Crypto for international, Fiat for local</p>
+                </div>
+                <div class="card">
+                    <h3>💰 Transaction Costs</h3>
+                    <p><strong>Crypto:</strong> Network fees vary by congestion<br>
+                    <strong>Fiat:</strong> Bank fees, especially for international<br>
+                    <strong>Winner:</strong> Crypto for large international transfers</p>
+                </div>
+                <div class="card">
+                    <h3>🌐 Accessibility</h3>
+                    <p><strong>Crypto:</strong> Internet access required, 24/7 availability<br>
+                    <strong>Fiat:</strong> Banking infrastructure needed<br>
+                    <strong>Winner:</strong> Crypto for underserved populations</p>
+                </div>
+            </div>
+
+            <h3>Investment ROI Calculator</h3>
+            <div class="calculator">
+                <label>Initial Investment ($):</label>
+                <input type="number" id="investment" placeholder="1000">
+
+                <label>Investment Type:</label>
+                <select id="investmentType">
+                    <option value="savings">Savings Account (0.5% APY)</option>
+                    <option value="stocks">Stock Market (7% avg annual)</option>
+                    <option value="crypto">Cryptocurrency (15% avg annual - High Risk)</option>
+                    <option value="stablecoin">Stablecoin Staking (5% APY)</option>
+                </select>
+
+                <label>Time Period (years):</label>
+                <input type="number" id="years" placeholder="5">
+
+                <button onclick="calculateROI()">Calculate Returns</button>
+                <div id="roiResult" class="result" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- Market and Adoption -->
+        <section class="section-market" id="market">
+            <h2>Market and Adoption</h2>
+
+            <h3>Current Market Status</h3>
+            <p>Despite increasing merchant adoption and blockchain payment innovations, cryptocurrency activities remain primarily focused on investment and speculation rather than everyday transactions. The market is maturing, but mainstream adoption as a medium of exchange faces several hurdles.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>📊 Market Size</h3>
+                    <p>The global cryptocurrency market capitalization exceeds $2 trillion, with Bitcoin and Ethereum dominating market share. However, daily transaction volumes for purchases remain relatively small.</p>
+                </div>
+                <div class="card">
+                    <h3>🏪 Merchant Adoption</h3>
+                    <p>Major companies like Microsoft, PayPal, and various retailers now accept cryptocurrency payments, though adoption remains limited compared to traditional payment methods.</p>
+                </div>
+                <div class="card">
+                    <h3>👥 User Demographics</h3>
+                    <p>Approximately 420 million cryptocurrency users worldwide, with adoption highest among younger, tech-savvy demographics in developed and emerging markets.</p>
+                </div>
+                <div class="card">
+                    <h3>🔮 Future Outlook</h3>
+                    <p>Experts predict a hybrid monetary system where fiat anchors economies through CBDCs, stablecoins serve as regulated bridges, and volatile cryptocurrencies remain as speculative and innovative assets.</p>
+                </div>
+            </div>
+
+            <h3>The Path Forward</h3>
+            <p>The future of money is not about cryptocurrency replacing fiat currency entirely. Instead, we're moving toward coexistence:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Fiat currencies</strong> will continue to anchor national economies, potentially modernized as CBDCs</li>
+                <li><strong>Stablecoins</strong> will serve as regulated bridges, facilitating seamless digital transactions</li>
+                <li><strong>Volatile cryptocurrencies</strong> will remain important for innovation, speculation, and specific use cases</li>
+                <li><strong>Hybrid systems</strong> will leverage the strengths of both traditional and digital finance</li>
+            </ul>
+        </section>
+
+        <!-- Resources -->
+        <section id="resources">
+            <h2>Resources & Further Reading</h2>
+            <p>Explore our curated collection of credible sources to deepen your understanding of cryptocurrency and the future of money.</p>
+
+            <ul class="resource-list">
+                <li>📚 <a href="https://hedera.com/learning/fintech/fiat-vs-crypto" target="_blank">Hedera: Fiat vs Crypto Comparison</a> - Comprehensive overview of key differences</li>
+                <li>📚 <a href="https://www.cfr.org/backgrounder/crypto-question-bitcoin-digital-dollars-and-future-money" target="_blank">Council on Foreign Relations: The Crypto Question</a> - Policy perspectives on digital money</li>
+                <li>📚 <a href="https://www.investopedia.com/tech/bitcoin-or-altcoin-can-one-them-replace-fiat/" target="_blank">Investopedia: Can Crypto Replace Fiat?</a> - Expert analysis on replacement potential</li>
+                <li>📚 <a href="https://www.forbes.com/councils/forbesbusinessdevelopmentcouncil/2025/04/23/the-future-of-money-will-digital-currencies-replace-fiat/" target="_blank">Forbes: The Future of Money</a> - Business insights on digital currency adoption</li>
+                <li>📚 <a href="https://www.firstcommand.com/coaching-center/insights/the-state-of-crypto/" target="_blank">First Command: The State of Crypto</a> - Current market analysis</li>
+                <li>📚 <a href="https://ir.lawnet.fordham.edu/cgi/viewcontent.cgi?article=2748&context=ilj" target="_blank">Fordham Law Review: Legal Perspectives</a> - Academic analysis of regulatory challenges</li>
+                <li>📚 <a href="https://www.sciencedirect.com/science/article/abs/pii/S1057521923003228" target="_blank">ScienceDirect: Research on Digital Currencies</a> - Peer-reviewed academic research</li>
+            </ul>
+
+            <div class="card" style="margin-top: 2rem; background: rgba(99, 102, 241, 0.1);">
+                <h3>📖 Glossary</h3>
+                <p><strong>Blockchain:</strong> A distributed ledger technology that records transactions across multiple computers</p>
+                <p><strong>CBDC:</strong> Central Bank Digital Currency - digital fiat issued by governments</p>
+                <p><strong>DeFi:</strong> Decentralized Finance - financial services without traditional intermediaries</p>
+                <p><strong>Stablecoin:</strong> Cryptocurrency pegged to stable assets like USD</p>
+                <p><strong>Smart Contract:</strong> Self-executing contracts with terms directly written into code</p>
+                <p><strong>Volatility:</strong> The degree of variation in trading prices over time</p>
+                <p><strong>Mining:</strong> The process of validating blockchain transactions and creating new coins</p>
+                <p><strong>Wallet:</strong> Software or hardware for storing cryptocurrency private keys</p>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Have questions or want to learn more? Reach out to our team!</p>
+
+            <div class="contact-form">
+                <input type="text" id="contactName" placeholder="Your Name" required>
+                <input type="email" id="contactEmail" placeholder="Your Email" required>
+                <input type="text" id="contactSubject" placeholder="Subject" required>
+                <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+                <button onclick="submitContact()">Send Message</button>
+                <div id="contactResult" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; text-align: center;"></div>
+            </div>
+
+            <div class="card-grid" style="margin-top: 3rem;">
+                <div class="card">
+                    <h3>👥 Our Team</h3>
+                    <p><strong>Mili</strong> - Team Coordinator<br>ml2060@rit.edu</p>
+                    <p><strong>Haleigh</strong> - Financial Research<br>hmc9362@rit.edu</p>
+                    <p><strong>Boris</strong> - Market Analysis<br>bs6822@rit.edu</p>
+                    <p><strong>Amina</strong> - Technical Lead<br>aa2994@rit.edu</p>
+                </div>
+                <div class="card">
+                    <h3>🎓 About This Project</h3>
+                    <p>This website was created as part of a Management Information Systems course project exploring the future of money and cryptocurrency's role in the global financial system.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>CryptoShifts</strong> - Understanding the Future of Money</p>
+        <p style="margin-top: 1rem;">© 2025 CryptoShifts Team | Rochester Institute of Technology</p>
+
+        <div class="citations">
+            <h4>Sources & Citations</h4>
+            <p style="font-size: 0.8rem; margin-top: 1rem;">
+                This website is based on extensive research from credible academic and industry sources including
+                Hedera, Council on Foreign Relations, Investopedia, Forbes, First Command, Fordham Law Review,
+                and peer-reviewed journals. All claims are supported by our research documented in the Resources section.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
